@@ -1,0 +1,52 @@
+version: "3.9"
+
+services:
+
+  api:
+    build: .
+    # volumes:
+    #   - ./app/:/usr/src/app/
+    #   - .:/app
+    env_file:
+      - ./.env
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+    # linux
+    command: ./docker-enterypoint.sh
+
+    # windows biuld and comment first then build with second
+    # command: python3 manage.py migrate
+    # command: python3 manage.py runserver 0.0.0.0:8000
+
+    restart: unless-stoped
+
+
+  # api-test:
+  #   build: passshare_api
+  #   volumes:
+  #     -
+  #   command: python3 manage.py test pass_box
+
+  db:
+    image: postgres:15.3-alpine3.18
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      # - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      # - POSTGRES_PASSWORD=A123456789a
+      - "POSTGRES_HOST_AUTH_METHOD=trust"
+      - POSTGRES_DB=${DB_NAME}
+      # - POSTGRES_DB=passshare_db
+      - DATABASE_HOST=db
+    ports:
+      - ${DB_PORT}:5432
+      # - 5432:5432
+    restart: unless-stoped
+    
+
+volumes:
+  postgres_data:
