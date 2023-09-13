@@ -1,4 +1,6 @@
-echo "Waiting for Postgresql to start..."
+#!/bin/sh
+
+echo "Waiting for Postgres to start..."
 ./wait-for db:5432
 
 echo "Migrating the Database..."

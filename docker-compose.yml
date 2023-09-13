@@ -14,13 +14,13 @@ services:
     depends_on:
       - db
     # linux
-    command: ./docker-enterypoint.sh
+    command: ./docker-entrypoint.sh
 
     # windows biuld and comment first then build with second
     # command: python3 manage.py migrate
     # command: python3 manage.py runserver 0.0.0.0:8000
 
-    restart: unless-stoped
+    restart: unless-stopped
 
 
   # api-test:
@@ -45,8 +45,8 @@ services:
     ports:
       - ${DB_PORT}:5432
       # - 5432:5432
-    restart: unless-stoped
-    
+    restart: unless-stopped
+
 
 volumes:
   postgres_data:
